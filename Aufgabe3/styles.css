@@ -1,0 +1,40 @@
+body {
+    background-color: beige;
+}
+
+h1 {
+    text-align: center;
+    color: chocolate;
+    border: 1px solid black;
+    padding-left: 0.5em;
+}
+
+h2 {
+    padding-left: 1em;
+}
+
+form {
+    padding: 0.5em;
+}
+
+legend {
+    font-size: 1.5em;
+}
+
+#rules {
+    text-align: left;
+    padding-left: 2em;
+}
+
+.centered {
+    padding-left: 5em ;
+}
+
+img {
+    position: absolute;
+    left: 42em;
+}
+
+#error {
+    color: red;
+}
