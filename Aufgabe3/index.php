@@ -52,6 +52,14 @@
             $i => rand(0, 2)
         ];
 
+        #Table Start
+        echo "<table>
+        <tr>
+            <th> Runde </th>
+            <th> Eingaben (User:PC) </th>
+            <th> Ergebnis </th>
+        </tr>";
+
         foreach($user as $key => $value){
             if(($value == 0 && $computer[$key] == 2) || ($value == 1 && $computer[$key] == 0) || ($value == 2 && $computer[$key] == 1)) {
                 $result = "Gewonnen!";
@@ -63,20 +71,17 @@
                 $result = "Unentschieden!";
                 $draw++;
             }
-        }
 
-        echo "<table>
-        <tr>
-            <th> Runde </th>
-            <th> Eingaben (User:PC) </th>
-            <th> Ergebnis </th>
-        </tr>
-        <tr>
-            <td> 1 </td>
+            #Result Row
+            echo "<tr>
+            <td> $key </td>
             <td>" .getName($user[$key]). ":" .getName($computer[$key]). "</td>
             <td> $result </td>
-        </tr>
-        </table>";
+            </tr>";
+
+        }
+        #Table End
+        echo "</table>";
 
     } else {
         echo "<div id=\"error\"> Bitte wählen Sie zuerst eine der Optionen aus. </div>";
