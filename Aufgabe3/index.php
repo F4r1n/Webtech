@@ -1,6 +1,5 @@
 <?php
     session_start();
-    $_SESSION["iteration"];
 ?>
 
 <html>
@@ -14,7 +13,7 @@
     <h2>Das Spiel funktioniert wie folgt: <br></h2>
     <p id="rules">
         Es gibt drei mögliche Eingaben: Schere, Stein oder Papier. Wenn eine Entscheidung für eine dieser Möglichkeiten vom Spieler getroffen wurde <br>
-        und diese mit dem "Absenden"-Button gesendet wurde wird die Eingabe gegen eine Zufällige Auswahl des Computers aufgestellt. Dabei gelten folgende Wertigkeiten: <br>
+        und diese mit dem "Absenden"-Button gesendet wurde wird die Eingabe gegen eine zufällige Auswahl des Computers aufgestellt. Dabei gelten folgende Wertigkeiten: <br>
     </p>    
     <div class="centered">
         Schere > Papier <br>
@@ -36,21 +35,39 @@
     </form>                
     <img src="SchereSteinPapier.jpg" alt="Schere-Stein-Papier">
 
-
 <?php
-    $_SESSION["iteration"] = 0;
-    $won = 0;
-    $lost = 0;
-    $draw = 0;
-    if (isset($_POST['submit'])) {
+    if (!isset($_SESSION['iteration']) || $_SESSION["iteration"] == 5){
+        $_SESSION["iteration"] = 0;
+        $_SESSION["won"] = 0;
+        $_SESSION["lost"] = 0;
+        $_SESSION["draw"] = 0;
+        $_SESSION["user"] = array();
+        $_SESSION["computer"] = array();
+        $_SESSION["standings"] = array();
+    }
+
+    if (isset($_POST['submit']) && isset($_POST['userInput'])) {
+        array_push($_SESSION["user"], $_POST['userInput']);
+        array_push($_SESSION["computer"], rand(0, 2));
+        
+        $human = $_SESSION["user"][$_SESSION["iteration"]];
+        $comp = $_SESSION["computer"][$_SESSION["iteration"]];
         $_SESSION["iteration"]++;
-        $i = $_SESSION["iteration"];
-        $user = [
-            $i => $_POST['userInput']
-        ];
-        $computer = [
-            $i => rand(0, 2)
-        ];
+
+
+        if(($human == 0 && $comp == 2) || ($human == 1 && $comp == 0) || ($human == 2 && $comp == 1)) {
+                $result = "Gewonnen!";
+                array_push($_SESSION["standings"], 0);
+                $_SESSION["won"]++;
+            } elseif (($human == 0 && $comp == 1) || ($human == 1 && $comp == 2) || ($human == 2 && $comp == 0)) {
+                $result = "Verloren!";
+                array_push($_SESSION["standings"], 1);
+                $_SESSION["lost"]++;
+            } else {
+                $result = "Unentschieden!";
+                array_push($_SESSION["standings"], 2);
+                $_SESSION["draw"]++;
+        }
 
         #Table Start
         echo "<table>
@@ -60,29 +77,30 @@
             <th> Ergebnis </th>
         </tr>";
 
-        foreach($user as $key => $value){
-            if(($value == 0 && $computer[$key] == 2) || ($value == 1 && $computer[$key] == 0) || ($value == 2 && $computer[$key] == 1)) {
-                $result = "Gewonnen!";
-                $won++;
-            } elseif (($value == 0 && $computer[$key] == 1) || ($value == 1 && $computer[$key] == 2) || ($value == 2 && $computer[$key] == 0)) {
-                $result = "Verloren!";
-                $lost++;
-            } else {
-                $result = "Unentschieden!";
-                $draw++;
-            }
-
+        foreach($_SESSION["user"] as $key => $value){
+            $runde = $key + 1;
             #Result Row
             echo "<tr>
-            <td> $key </td>
-            <td>" .getName($user[$key]). ":" .getName($computer[$key]). "</td>
-            <td> $result </td>
+            <td> $runde </td>
+            <td>" .getName($_SESSION["user"][$key]). ":" .getName($_SESSION["computer"][$key]). "</td>
+            <td>" .getResult($_SESSION["standings"][$key]). "</td>
             </tr>";
-
         }
-        #Table End
-        echo "</table>";
+    echo "</table>";
 
+    #Evaluate overall result
+    if ($_SESSION["won"] > $_SESSION["lost"]) {
+        $bo5 = "Gewonnen!";
+    } else if ($_SESSION["won"] < $_SESSION["lost"]) {
+        $bo5 = "Verloren!";
+    } else {
+        $bo5 = "ein Unentschieden erreicht!";
+    }
+
+    if ($_SESSION['iteration'] == 5){
+        echo "<span id=\"result\"> Ergebnis: " .$_SESSION["won"]. " : " .$_SESSION["lost"]. " (Unentschieden: " .$_SESSION["draw"].") </span> <br>";
+        echo "<span id=\"result\"> Damit haben Sie gegen den Computer im BestOfFive $bo5</span>";
+    }
     } else {
         echo "<div id=\"error\"> Bitte wählen Sie zuerst eine der Optionen aus. </div>";
     }
@@ -99,6 +117,16 @@
             2 => "Papier",
         ];
         return $zeichenArray[$index];
+    }
+
+    function getResult($index)
+    {
+        $resultArray = [
+            0 => "Gewonnen",
+            1 => "Verloren",
+            2 => "Unentschieden",
+        ];
+        return $resultArray[$index];
     }
 ?>
 
