@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Das Ziegenproblem</title>
+    <meta charset="utf-8">
+    <meta name="description" content="JavaScript, Ajax und div" />
+    <meta name="keywords" content="JavaScript, Ajax und div">
+    <meta name="author" content="gruppe07">
+    <link rel="stylesheet" href="http://localhost/uebung06/styles.css">
+    <script src="http://localhost/uebung06/function.js"></script>
+</head>
+    <body onload="setup()">
+        <h1> Das Ziegenproblem</h1>
+        <div>
+            <div class="kopf" id="aufgabe">Bitte eine der Türen anklicken!</div>
+            <div class="kopf" id="reset"> <button onclick="setup()"> Neues Spiel! </button> </div>
+            <div class="kopf" id="ende"> <button onclick="ende()"> Ende </button> </div>
+            <div class="kopf" id="stats">Statistiken <br> 
+                <span id="bleiben">Chance beim Bleiben: </span> <br> 
+                <span id="wechseln">Chance beim wechseln: </span> <br>
+                <span id="autos">Autos: </span> <br>
+                <span id="ziegen">Ziegen: </span> <br>
+            </div>
+
+        </div>
+        <br>
+        <div id="pictures">
+            <img name="door" id="door1" class="" src="http://localhost/uebung06/doorClosed.png" alt="Closed Door" onclick="changePicture(this.id)">
+            <img name="door" id="door2" class="" src="http://localhost/uebung06/doorClosed.png" alt="Closed Door" onclick="changePicture(this.id)">
+            <img name="door" id="door3" class="" src="http://localhost/uebung06/doorClosed.png" alt="Closed Door" onclick="changePicture(this.id)">
+        </div>
+    </body>
+</html>

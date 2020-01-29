@@ -1,0 +1,77 @@
+h1
+{
+color:green;
+font-size:3.3em;
+text-align:center;
+}
+
+#seite2
+{
+color:red;
+}
+
+.rot
+{
+color:red;
+}
+
+.blau
+{
+color:blue;
+}
+
+.gruen
+{
+color:green;
+}
+
+.weiss
+{
+color:white;
+}
+
+.mitte
+{
+	text-align:center;
+}
+
+.hindex
+{
+	background-color: #DBA901;
+}
+
+.hseite1
+{
+	background-color: #688A08;
+}
+.hseite2
+{
+	background-color: #D7DF01;
+}
+
+.hseite4
+{
+	background-color: #01DF74;
+}
+
+.rechts
+{
+text-align:right;
+}
+
+.links
+{
+text-align:left;	
+}
+
+.ul
+{
+	padding-left: 25em;
+}
+
+.gelb
+{
+	color:yellow;
+}
+
+

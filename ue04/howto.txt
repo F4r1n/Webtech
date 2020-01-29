@@ -1,0 +1,3 @@
+cd ins Verzeichnis
+xampp starten
+"php index.php"
